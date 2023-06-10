@@ -7,10 +7,9 @@ function displayChatLog(chatLog) {
 
   chatLog.forEach((message) => {
     const messageElement = document.createElement('div');
-    const timestamp = new Date(message.timestamp);
-    timestamp.setMinutes(timestamp.getMinutes() + timestamp.getTimezoneOffset() + 60*9);  // UTCからJST（東京）に変換
+    const timestamp = luxon.DateTime.fromFormat(message.timestamp, 'yyMMddHHmmss', { zone: 'Asia/Tokyo' });
 
-    const formattedTimestamp = `${String(timestamp.getHours()).padStart(2, '0')}:${String(timestamp.getMinutes()).padStart(2, '0')}:${String(timestamp.getSeconds()).padStart(2, '0')}`;
+    const formattedTimestamp = `${String(timestamp.hour).padStart(2, '0')}:${String(timestamp.minute).padStart(2, '0')}:${String(timestamp.second).padStart(2, '0')}`;
 
     messageElement.innerHTML = `
       <div class="message">
@@ -22,6 +21,7 @@ function displayChatLog(chatLog) {
     chatLogContainer.appendChild(messageElement);
   });
 }
+
 
 // メッセージ送信
 const messageForm = document.getElementById('messageForm');
