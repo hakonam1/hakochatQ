@@ -1,7 +1,135 @@
+header {
+  height: 20px; /* 適切な高さに変更してください */
+  background-color: #121212; /* ヘッダーの背景色を設定 */
+  /* その他のスタイルプロパティを追加 */
+}
+
+header h4 {
+  margin: 0;
+}
+
 body {
   font-family: Arial, sans-serif;
   background-color: #121212;
   color: #fff;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.container {
+  display: flex;
+  overflow-x: scroll;
+  width: 100%;
+  height: 90vh;
+  transition: transform 0.3s ease-in-out;
+}
+
+.thread-list-container {
+  width: 40%; /* トークルームが4割 */
+  min-width: 200px;
+  background-color: #2b2b2b;
+  padding: 10px;
+  overflow: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+.container.open .thread-list-container {
+  transform: translateX(0);
+}
+
+.thread-list-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.thread-list-container li {
+  margin-bottom: 10px;
+}
+
+.thread-list-container {
+  width: 40%;
+  min-width: 200px;
+  background-color: #2b2b2b;
+  padding: 10px;
+  overflow: auto;
+  transition: transform 0.3s ease-in-out;
+  border-right: 2px solid #444; /* ボックスの右側に線を追加 */
+}
+
+.thread-list-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.thread-list-container li {
+  margin-bottom: 10px;
+  padding: 5px; /* タッチ判定エリアを広くするために padding を追加 */
+  border-radius: 8px;
+  cursor: pointer; /* リストアイテムをホバーしたときにカーソルが変わるように設定 */
+}
+
+.thread-list-container li:hover {
+  background-color: #444; /* ホバー時に背景色を変更 */
+}
+
+.thread-list-container a {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+  transition: color 0.2s;
+}
+
+.thread-list-container a:hover {
+  color: #3498db;
+}
+
+#createRoomButton {
+  width: auto;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #555;
+  color: #fff;
+  border: 2px solid #555;
+  outline: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+  margin-top: 10px;
+}
+
+#createRoomButton:hover {
+  background-color: #3498db;
+}
+
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 95vh;
+  min-width: 380px;
+  padding: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.container.open .chat-container {
+  transform: translateX(-100%);
+}
+
+@media (max-width: 480px) {
+  .container.open .chat-container {
+    transform: translateX(0);
+  }
+
+  .container.open .thread-list-container {
+    transform: translateX(-100%);
+  }
+
+  #chatLogWrapper {
+  flex-grow: 1; /* チャットログエリアが残りのスペースを占める */
+  z-index: 1;
+  }
 }
 
 #userCount {
@@ -10,32 +138,84 @@ body {
   margin-bottom: 10px;
 }
 
+#chatLogWrapper {
+  flex: 1;
+  height: 70%;
+  position: relative;
+  z-index: 1;
+}
+
 #chatLog {
-  height: 250px;
+  flex: 1;
+  height: 90%;
   overflow-y: scroll;
-  border: 2px solid #555;
-  background-color: #1f1f1f;
+  overflow-x: scroll;
+  background-color: transparent; /* 背景色を透明に */
   padding: 10px;
-  margin-bottom: 10px;
+  margin: 10px;
   border-radius: 8px;
+}
+
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  pointer-events: none; /* クリックイベントを下の要素に透過させる */
+  z-index: 2; 
+}
+
+#chatLog::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://i.gyazo.com/4dd9c4250a7c58c3745e924662dd12c2.gif');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.9;
+  z-index: -1; /* 背面に配置 */
 }
 
 .message {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  font-size: 12px;
+  flex-direction: column;
+  /* border: 1px solid #ccc; */
+  border-bottom: 1px solid #ccc; /* 下側の枠線 */
+  border-right: 1px solid #ccc; /* 右側の枠線 */
+  font-size: 18px;
   color: rgba(255, 255, 255, 0.6);
+  padding: 10px;
   margin-bottom: 5px;
+  border-radius: 3px;
+  z-index: 3;
 }
 
 .message-content {
-  margin-right: 5px;
+  margin-left: 0px; /* タイムスタンプより右に配置 */
+  margin-bottom: 5px; /* メタ情報との間隔を設定 */
+  z-index: 3;
+}
+
+/* メタ情報コンテナ */
+.metadata-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
 }
 
 .message-timestamp {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.4);
+  margin-left: 10px;
+  margin-right: 10px;
+  z-index: 3;
 }
 
 #messageForm {
@@ -51,11 +231,63 @@ body {
   color: #fff;
   border: 2px solid #555;
   outline: none;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   border-radius: 8px;
 }
 
-#submitBtn {
+#messageForm button[type="submit"] {
+  height: 80px;
+  padding: 10px 20px;
+  margin: 5px 5px;
+  font-size: 16px;
+  background-color: #555;
+  color: #fff;
+  border: 2px solid #555;
+  outline: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+#messageForm button[type="submit"]:hover {
+  background-color: #3498db;
+}
+
+.room-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #2b2b2b;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  max-width: 100%;
+  z-index: 999;
+}
+
+.room-dialog form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.room-dialog label {
+  color: #fff;
+  margin-right: 10px;
+}
+
+.room-dialog input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #333;
+  color: #fff;
+  border: 2px solid #555;
+  outline: none;
+  border-radius: 8px;
+}
+
+.room-dialog button {
   padding: 10px 20px;
   font-size: 16px;
   background-color: #555;
@@ -63,20 +295,128 @@ body {
   border: 2px solid #555;
   outline: none;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   border-radius: 8px;
+  transition: background-color 0.2s;
 }
 
-@media (max-width: 480px) {
-  #messageForm {
-    flex-direction: column;
-  }
+.room-dialog button:hover {
+  background-color: #3498db;
+}
 
-  #messageInput {
-    margin-bottom: 10px;
-  }
 
-  #submitBtn {
-    width: 100%;
-  }
+/* 選択中のルームのスタイル */
+.room-selected {
+  background-color: #3498db;
+  color: #fff; /* テキストの色を白に変更 */
+}
+
+/* Upvote and Downvote button styles */
+.vote-container {
+  display: flex; /* ボタンを横並びに */
+  align-items: center; /* センター寄せ */
+  z-index: 4; /* ボタンが他の要素より前面に表示されるように調整 */
+}
+
+.vote-button {
+  width: auto;
+  font-size: 14px;
+  padding: 4px 8px;
+  margin-right: 4px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 4;
+}
+
+.upvote-button {
+  background-color: #994d73; /* 赤色の背景色 */
+  color: white;
+  margin-right: 5px; /* ボタンの間隔を調整 */
+  z-index: 4;
+}
+
+.downvote-button {
+  background-color: #4d7399; /* 青色の背景色 */
+  color: white;
+  z-index: 4;
+}
+
+.upvote-count,
+.downvote-count {
+  display: inline-block; /* インラインブロック要素に変更 */
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-left: 4px; /* 数値とボタンの間隔を調整 */
+}
+
+#changeLog {
+  background-color: #141414; /* 半島名の黒 */
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 12px;
+}
+
+#changeLog h4 {
+  color: #6495ed; /* 鮮やかな青色 */
+  margin-bottom: 5px;
+}
+
+#changeLog li {
+  list-style-type: none;
+  color: #3498db;
+  margin-left: 0px;
+}
+
+#changeLog ul {
+  padding-left: 0;
+  color: #0095ff;
+}
+
+#changeLog li:before {
+  content: '\2022';
+  color: #3498db;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+/* ホバーエフェクト */
+#changeLog:hover {
+  background-color: #1c1c1c; /* より明るい黒 */
+}
+
+/* フッター全体のスタイル */
+footer {
+  background-color: #141414; /* フッターの背景色 */
+  color: #ffffff; /* 文字の色 */
+  padding: 20px 0; /* 上下の余白 */
+}
+
+/* フッターコンテンツのスタイル */
+.footer-content {
+  font-size: x-small;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* 使用方法リンクのスタイル */
+.usage a {
+  color: #3498db; /* リンクの色 */
+  text-decoration: none;
+}
+
+/* ソーシャルリンクのスタイル */
+.social-links a {
+  color: #324b66; /* リンクの色 */
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+/* アイコンのスタイル */
+.fab, .fa-solid {
+  font-size: 1.5em;
+  vertical-align: middle;
 }
