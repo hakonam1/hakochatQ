@@ -162,7 +162,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.4);
   pointer-events: none; /* クリックイベントを下の要素に透過させる */
   z-index: 2; 
 }
@@ -189,6 +189,7 @@ body {
   border-bottom: 1px solid #ccc; /* 下側の枠線 */
   border-right: 1px solid #ccc; /* 右側の枠線 */
   font-size: 18px;
+  font-weight: bold;
   color: rgba(255, 255, 255, 0.6);
   padding: 10px;
   margin-bottom: 5px;
@@ -199,6 +200,7 @@ body {
 .message-content {
   margin-left: 0px; /* タイムスタンプより右に配置 */
   margin-bottom: 5px; /* メタ情報との間隔を設定 */
+  white-space: pre-line; /* メッセージの改行を反映 */
   z-index: 3;
 }
 
@@ -216,6 +218,22 @@ body {
   margin-left: 10px;
   margin-right: 10px;
   z-index: 3;
+}
+
+.message-number {
+  color: #363c90;
+  /* border: 1px solid #080d58; */
+}
+
+.slightly-red-message {
+  color: rgba(245, 245, 14, 0.5); /* 適切な色の強度を調整してください */
+}
+
+.more-red-message {
+  color: rgba(234, 158, 18, 0.5); /* 適切な色の強度を調整してください */
+}
+.very-red-message {
+  color: rgba(235, 14, 14, 0.5);
 }
 
 #messageForm {

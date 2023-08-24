@@ -1,5 +1,3 @@
-//messageHandlers.js
-
 function generateMessageId() {
   const timestamp = Date.now();
   const randomString = generateRandomString(5);
@@ -30,15 +28,6 @@ function handleNewMessage(message, socket, io, rooms) {
     return;
   }
 
-  const chatMessage = {
-    id: generateMessageId(),
-    text: text,
-    timestamp: timestamp,
-    upvotes: 0,
-    downvotes: 0,
-    isOwnMessage: false,
-  };
-
   let room = rooms.find((r) => r.id === roomId);
   if (!room) {
     console.log("Room not found. Creating a new room...");
@@ -46,6 +35,18 @@ function handleNewMessage(message, socket, io, rooms) {
     rooms.push(room);
     io.emit("updateRoomList", rooms);
   }
+
+  const chatMessage = {
+    id: generateMessageId(),
+    messageNumber: room.chatLog.length + 1, // メッセージ番号を追加
+    text: text,
+    timestamp: timestamp,
+    upvotes: 0,
+    downvotes: 0,
+    isOwnMessage: false,
+  };
+
+
 
   chatMessage.isOwnMessage = room.id === message.roomId;
   room.chatLog.push(chatMessage);
@@ -89,22 +90,9 @@ function handleDownvote(socket, messageId, io, rooms) {
       io.to(`room-${room.id}`).emit("updateMessage", message);
 
       // 合計値を更新してクライアントに送信
-      updateTotalVotes(room.id, io, rooms);
+      updateTotalVotes(room.idm, io, rooms);
     }
   }
-}
-
-// チャットログ内の全投票数を計算する関数
-function calculateTotalVotes(chatLog) {
-  let totalUpvotes = 0;
-  let totalDownvotes = 0;
-  
-  chatLog.forEach((message) => {
-    totalUpvotes += message.upvotes;
-    totalDownvotes += message.downvotes;
-  });
-  
-  return { totalUpvotes, totalDownvotes };
 }
 
 // クライアント側に合計値を送信
@@ -120,6 +108,20 @@ function updateTotalVotes(roomId, io, rooms) {
     console.log(`Sent total upvotes: ${totalUpvotes}, total downvotes: ${totalDownvotes}`);
   }
 }
+
+// 関数: チャットメッセージのupvotesとdownvotesの合計を計算する
+function calculateTotalVotes(chatLog) {
+  let totalUpvotes = 0;
+  let totalDownvotes = 0;
+
+  chatLog.forEach((message) => {
+    totalUpvotes += message.upvotes;
+    totalDownvotes += message.downvotes;
+  });
+
+  return { totalUpvotes, totalDownvotes };
+}
+
 
 module.exports = {
   handleNewMessage,
