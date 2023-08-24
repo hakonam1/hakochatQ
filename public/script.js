@@ -1,3 +1,4 @@
+//script.js
 console.log("script.js is running");
 const socket = io();
 const chatLogContainer = document.getElementById("chatLog");
@@ -224,6 +225,9 @@ function joinRoom(roomId) {
     link.classList.remove("active");
     if (link.getAttribute("data-room-id") === String(roomId)) {
       link.classList.add("active");
+      link.style.color = "#3498db"; 
+    } else {
+      link.style.color = "white";
     }
   });
 }

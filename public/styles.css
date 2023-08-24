@@ -43,7 +43,7 @@ body {
 }
 
 .thread-list-container li {
-  margin-bottom: 10px;
+  line-height: 2;
 }
 
 .thread-list-container {
@@ -62,7 +62,6 @@ body {
 }
 
 .thread-list-container li {
-  margin-bottom: 10px;
   padding: 5px; /* タッチ判定エリアを広くするために padding を追加 */
   border-radius: 8px;
   cursor: pointer; /* リストアイテムをホバーしたときにカーソルが変わるように設定 */
@@ -77,7 +76,7 @@ body {
   text-decoration: none;
   color: #fff;
   font-size: 16px;
-  transition: color 0.2s;
+  transition: color 0.1s;
 }
 
 .thread-list-container a:hover {
@@ -221,7 +220,7 @@ body {
 }
 
 .message-number {
-  color: #363c90;
+  color: #27eb4bc6;
   /* border: 1px solid #080d58; */
 }
 
@@ -328,6 +327,10 @@ body {
   color: #fff; /* テキストの色を白に変更 */
 }
 
+.active {
+  color: #3498db; /* ここに希望の色を設定してください */
+}
+
 /* Upvote and Downvote button styles */
 .vote-container {
   display: flex; /* ボタンを横並びに */
@@ -368,7 +371,7 @@ body {
 }
 
 #changeLog {
-  background-color: #141414; /* 半島名の黒 */
+  background-color: #141414; /* 半透明の黒 */
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

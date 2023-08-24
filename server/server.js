@@ -26,6 +26,8 @@ io.on("connect", (socket) => {
 
   socket.on("message", (message) => {
     handleNewMessage(message, socket, io, rooms);
+
+    io.emit("updateRoomList", rooms); // メッセージ受信時にルームリストを更新
   });
 
   socket.on("createRoom", (title) => {

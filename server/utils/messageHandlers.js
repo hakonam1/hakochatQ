@@ -1,3 +1,4 @@
+//messageHandlers.js
 function generateMessageId() {
   const timestamp = Date.now();
   const randomString = generateRandomString(5);
@@ -59,6 +60,17 @@ function handleNewMessage(message, socket, io, rooms) {
     roomId: room.id,
     chatLog: room.chatLog,
   })
+
+  // 新しいメッセージがあるルームのインデックスを検索
+  const roomIndex = rooms.findIndex((r) => r.id === roomId);
+  
+  if (roomIndex !== -1) {
+    // ルームをリストから削除し、先頭に移動させる
+    const [room] = rooms.splice(roomIndex, 1);
+    rooms.unshift(room);
+    
+    io.emit("updateRoomList", rooms); // 全クライアントにルームリストの更新を送信
+  }
 
   console.log("Updated chatLog for room", room.id);;
 }
