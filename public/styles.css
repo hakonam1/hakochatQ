@@ -279,6 +279,7 @@ body {
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   max-width: 100%;
+  display: none;
   z-index: 999;
 }
 
@@ -440,4 +441,28 @@ footer {
 .fab, .fa-solid {
   font-size: 1.5em;
   vertical-align: middle;
+}
+
+/* スプリッターのスタイル */
+.splitter {
+  width: 5px;
+  cursor: col-resize; /* ドラッグカーソルを変更 */
+}
+
+/* ルーム一覧とチャットのコンテナのスタイル */
+.thread-list-container {
+  width: 30%; /* 初期の幅を設定 */
+  display: inline-block;
+  vertical-align: top;
+  overflow: auto; /* スクロールが必要な場合にスクロールバーを表示 */
+  height: 100vh; /* 画面の高さいっぱいに設定 */
+}
+
+
+.chat-container {
+  width: 70%; /* 初期の幅を設定 */
+  display: inline-block;
+  vertical-align: top;
+  overflow: auto; /* スクロールが必要な場合にスクロールバーを表示 */
+  height: 100vh; /* 画面の高さいっぱいに設定 */
 }

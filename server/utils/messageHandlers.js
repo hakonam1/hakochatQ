@@ -72,6 +72,8 @@ function handleNewMessage(message, socket, io, rooms) {
     io.emit("updateRoomList", rooms); // 全クライアントにルームリストの更新を送信
   }
 
+  room.totalMessages = room.chatLog.length;
+
   console.log("Updated chatLog for room", room.id);;
 }
 

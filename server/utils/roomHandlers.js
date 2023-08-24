@@ -12,7 +12,7 @@ function joinRoom(socket, roomId, rooms) {
   if (room) {
     socket.join(`room-${room.id}`);
     room.users.push(socket.id);
-    socket.emit("chatLog", { roomId: room.id, chatLog: room.chatLog });
+    socket.emit("chatLog", { roomId: room.id, chatLog: room.chatLog, totalMessages: room.totalMessages });
   }
 }
 

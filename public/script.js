@@ -207,7 +207,7 @@ function updateRoomList(rooms) {
     const roomItem = document.createElement("li");
     const roomLink = document.createElement("a");
     roomLink.href = `#${room.id}`;
-    roomLink.textContent = room.title;
+    roomLink.textContent = `${room.title} (${room.chatLog.length})`;
     roomLink.setAttribute("data-room-id", room.id);
     roomLink.addEventListener("click", () => {
       joinRoom(room.id);
@@ -253,4 +253,32 @@ chatLogContainer.addEventListener("click", (e) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   Push.Permission.request();
+});
+
+const splitter = document.getElementById("splitter");
+const threadListContainer = document.querySelector(".thread-list-container");
+const chatContainer = document.querySelector(".chat-container");
+
+let isDragging = false;
+let startX = 0;
+let startWidth = 0;
+
+splitter.addEventListener("mousedown", (e) => {
+  isDragging = true;
+  startX = e.pageX;
+  startWidth = threadListContainer.offsetWidth;
+});
+
+document.addEventListener("mousemove", (e) => {
+  if (!isDragging) return;
+
+  const offset = e.pageX - startX;
+  const newWidth = startWidth + offset;
+
+  threadListContainer.style.width = newWidth + "px";
+  chatContainer.style.width = `calc(100% - ${newWidth}px)`;
+});
+
+document.addEventListener("mouseup", () => {
+  isDragging = false;
 });

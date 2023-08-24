@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +11,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.12/push.min.js"></script>
 
 </head>
+
 <body>
-  <header><h4>HakoChat</h4></header>
+  <header>
+    <h4>HakoChat</h4>
+  </header>
   <div class="container">
     <!-- スレッド（ルーム）一覧 -->
     <div class="thread-list-container">
@@ -20,6 +24,9 @@
       </ul>
       <button id="createRoomButton">Create room</button>
     </div>
+
+    <!-- スプリッター -->
+    <div class="splitter" id="splitter"></div>
 
     <div class="chat-container">
       <div id="userCount"></div>
@@ -41,6 +48,8 @@
     <div>
       <ul>2023.08.24
         <li>最新メッセージ順にトークルーム一覧を並び替える</li>
+        <li>Roomtitleの横に総メッセージ数を表示</li>
+        <li>ドラッグで幅を変えられるように(PC)</li>
       </ul>
       <ul>2023.08.23
         <li>レス番号を追加</li>
@@ -80,4 +89,5 @@
   <script src="https://cdn.socket.io/3.1.3/socket.io.min.js"></script>
   <script src="script.js"></script>
 </body>
+
 </html>
