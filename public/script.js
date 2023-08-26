@@ -92,13 +92,21 @@ function createMessageElement(message) {
     messageElement.classList.add("own-message");
   }
 
-  // upvoteの数に応じてメッセージ要素にクラスを追加
-  if (message.upvotes >= 3 && message.upvotes <= 5) {
-    messageElement.classList.add("slightly-red-message");
-  } else if (message.upvotes >= 6 && message.upvotes <= 8) {
-    messageElement.classList.add("more-red-message");
-  } else if (message.upvotes >= 9) {
-    messageElement.classList.add("very-red-message");
+  // upvoteとdownvoteの差に応じてメッセージ要素にクラスを追加
+  const voteMargin = message.upvotes - message.downvotes;
+
+  if (voteMargin >= -9 && voteMargin <= -5) {
+    messageElement.classList.add("voteMargin-1");
+  } else if (voteMargin >= -14 && voteMargin <= -10) {
+    messageElement.classList.add("voteMargin-2");
+  } else if (voteMargin <= -15) {
+    messageElement.classList.add("voteMargin-3");
+  } else if (voteMargin >= 5 && voteMargin <= 9) {
+    messageElement.classList.add("voteMargin1");
+  } else if (voteMargin >= 10 && voteMargin <= 14) {
+    messageElement.classList.add("voteMargin2");
+  } else if (voteMargin >= 15) {
+    messageElement.classList.add("voteMargin3");
   }
 
   return messageElement;
@@ -145,7 +153,7 @@ createRoomButton.addEventListener("click", () => {
 
 roomDialog.addEventListener("submit", (e) => {
   e.preventDefault();
-  const roomTitle = roomInput.value.trim();
+  const roomTitle = roomInput.value.trim().substring(0, 20);
   if (roomTitle !== "") {
     socket.emit("createRoom", roomTitle);
     roomDialog.style.display = "none";
@@ -162,7 +170,7 @@ socket.on("connect", () => {
 });
 
 socket.on("userCount", (userCount) => {
-  userCountElement.textContent = `user count: ${userCount}`;
+  userCountElement.textContent = `Connecting: ${userCount}`;
   console.log("usercountが更新された");
 });
 
@@ -225,7 +233,7 @@ function joinRoom(roomId) {
     link.classList.remove("active");
     if (link.getAttribute("data-room-id") === String(roomId)) {
       link.classList.add("active");
-      link.style.color = "#3498db"; 
+      link.style.color = "#3498db";
     } else {
       link.style.color = "white";
     }
