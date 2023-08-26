@@ -24,8 +24,14 @@ function handleNewMessage(message, socket, io, rooms) {
   const timestamp = message.timestamp;
   const roomId = message.roomId;
 
-  if (text.length > 500) {
-    socket.emit("error", "Message is limited to 500 characters.");
+  // URLを正規表現を使用して検出
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const messageWithLinks = text.replace(urlRegex, (url) => {
+    return `<a href="${url}" target="_blank">${url}</a>`;
+  });
+
+  if (text.length > 200) {
+    socket.emit("error", "Message is limited to 200 characters.");
     return;
   }
 
@@ -40,7 +46,7 @@ function handleNewMessage(message, socket, io, rooms) {
   const chatMessage = {
     id: generateMessageId(),
     messageNumber: room.chatLog.length + 1, // メッセージ番号を追加
-    text: text,
+    text: messageWithLinks, // ハイパーリンクに変換したテキストを使用
     timestamp: timestamp,
     upvotes: 0,
     downvotes: 0,

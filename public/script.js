@@ -15,13 +15,14 @@ let currentRoomId = null;
 
 function escapeHTML(str) {
   const escapeMap = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
+    // "&": "&amp;",
+    // "<": "&lt;",
+    // ">": "&gt;",
+    // '"': "&quot;",
+    // "'": "&#39;",
   };
-  return str.replace(/[&<>"']/g, (char) => escapeMap[char]);
+  // return str.replace(/[&<>"']/g, (char) => escapeMap[char]);
+  return str;
 }
 
 function createMessageElement(message) {
@@ -41,7 +42,7 @@ function createMessageElement(message) {
   // Create message content element
   const messageContent = document.createElement("div");
   messageContent.classList.add("message-content");
-  messageContent.textContent = escapeHTML(message.text);
+  messageContent.innerHTML = escapeHTML(message.text);
 
   // Create metadata container
   const metadataContainer = document.createElement("div");
