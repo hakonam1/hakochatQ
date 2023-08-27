@@ -154,7 +154,7 @@ createRoomButton.addEventListener("click", () => {
 
 roomDialog.addEventListener("submit", (e) => {
   e.preventDefault();
-  const roomTitle = roomInput.value.trim().substring(0, 20);
+  const roomTitle = roomInput.value.trim().substring(0, 30);
   if (roomTitle !== "") {
     socket.emit("createRoom", roomTitle);
     roomDialog.style.display = "none";
@@ -172,7 +172,6 @@ socket.on("connect", () => {
 
 socket.on("userCount", (userCount) => {
   userCountElement.textContent = `Connecting: ${userCount}`;
-  console.log("usercountが更新された");
 });
 
 socket.on("message", (message) => {
@@ -241,10 +240,10 @@ function joinRoom(roomId) {
   });
 }
 
-// 新しい関数: 投票を送信する
+//  投票を送信する
 function sendVote(messageId, voteType) {
   socket.emit(voteType, messageId);
-  console.log(`Sent ${voteType} event for message ID:`, messageId); // デバッグログ
+  console.log(`Sent ${voteType} event for message ID:`, messageId);
   updateVoteCountDisplay(); // 投票数表示を更新する関数を呼び出す
 }
 
@@ -290,4 +289,50 @@ document.addEventListener("mousemove", (e) => {
 
 document.addEventListener("mouseup", () => {
   isDragging = false;
+});
+
+//2023.08.27
+// 画像リンクがクリックされたときの処理
+chatLogContainer.addEventListener("click", (e) => {
+  const target = e.target;
+  if (target.classList.contains("image-link")) {
+    e.preventDefault();
+    const imageUrl = target.getAttribute("data-image-url");
+    openImageModal(imageUrl);
+  }
+});
+
+// 画像モーダルを開く関数
+function openImageModal(imageUrl) {
+  const modalOverlay = document.getElementById("modalOverlay");
+  const modalImage = document.getElementById("modalImage");
+
+  modalImage.src = imageUrl;
+  modalOverlay.style.display = "flex"; // displayを"flex"に変更
+  modalImageContainer.style.display = "flex"; // displayを"flex"に設定
+}
+
+// 画像モーダルを閉じる関数
+function closeImageModal() {
+  const modalOverlay = document.getElementById("modalOverlay");
+  const modalImageContainer = document.getElementById("modalImageContainer");
+
+  modalOverlay.style.display = "none";
+  modalImageContainer.style.display = "none"; // displayを"none"に設定
+}
+
+// モーダル外側をクリックしたらモーダルを閉じる
+modalOverlay.addEventListener("click", (e) => {
+  if (e.target === modalOverlay) {
+    closeImageModal();
+  }
+});
+
+// 画像をクリックしたらモザイクを再適用するか外す
+modalImage.addEventListener("click", () => {
+  if (modalImage.style.filter === "none") {
+    modalImage.style.filter = "blur(30px)";
+  } else {
+    modalImage.style.filter = "none";
+  }
 });

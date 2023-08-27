@@ -52,15 +52,15 @@ body {
 }
 
 .thread-list-container ul {
-list-style: none;
+  list-style: none;
   padding: 0;
 }
-
 
 .thread-list-container li {
   line-height: 2;
   padding: 5px; /* タッチ判定エリアを広くするために padding を追加 */
   border-radius: 8px;
+  border-bottom: 1px solid #444;
   cursor: pointer; /* リストアイテムをホバーしたときにカーソルが変わるように設定 */
 }
 
@@ -98,7 +98,6 @@ list-style: none;
   background-color: #3498db;
 }
 
-
 .chat-container {
   display: flex;
   flex-direction: column;
@@ -123,8 +122,8 @@ list-style: none;
   }
 
   #chatLogWrapper {
-  flex-grow: 1; /* チャットログエリアが残りのスペースを占める */
-  z-index: 1;
+    flex-grow: 1; /* チャットログエリアが残りのスペースを占める */
+    z-index: 1;
   }
 }
 
@@ -160,7 +159,7 @@ list-style: none;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
   pointer-events: none; /* クリックイベントを下の要素に透過させる */
-  z-index: 2; 
+  z-index: 2;
 }
 
 #chatLog::before {
@@ -170,7 +169,7 @@ list-style: none;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('https://i.gyazo.com/bbfc2696be659f9736348b23d239ac13.png');
+  background-image: url("https://i.gyazo.com/a2f2101bc44b224b98ea883de0cfb4ff.gif");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
@@ -184,7 +183,7 @@ list-style: none;
   /* border: 1px solid #ccc; */
   border-bottom: 1px solid #ccc; /* 下側の枠線 */
   border-right: 1px solid #ccc; /* 右側の枠線 */
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.6);
   padding: 10px;
@@ -198,6 +197,7 @@ list-style: none;
   margin-bottom: 5px; /* メタ情報との間隔を設定 */
   white-space: pre-line; /* メッセージの改行を反映 */
   /* color: #b3cbdd; */
+  word-break: break-all; /* 長い単語を折り返す */
   z-index: 3;
 }
 
@@ -207,6 +207,7 @@ list-style: none;
   justify-content: flex-end;
   align-items: center;
   width: 100%;
+  height: 7px;
 }
 
 .message-timestamp {
@@ -224,42 +225,41 @@ list-style: none;
 }
 
 /* CSS for message elements with different vote margins */
-..message.voteMargin-3 {
+.message.voteMargin-3 {
   border-left: 4px solid purple;
   color: purple;
-  font-size: 18px;
+  font-size: x-small;
 }
 
 .message.voteMargin-2 {
   border-left: 4px solid blue;
   color: blue;
-  font-size: 18px;
+  font-size: small;
 }
 
 .message.voteMargin-1 {
   border-left: 4px solid green;
   color: green;
-  font-size: 18px;
+  font-size: medium;
 }
 
 .message.voteMargin1 {
   border-left: 4px solid yellow;
   color: yellow;
-  font-size: 22px;
+  font-size: large;
 }
 
 .message.voteMargin2 {
   border-left: 4px solid orange;
   color: orange;
-  font-size: 26px;
+  font-size: x-large;
 }
 
 .message.voteMargin3 {
   border-left: 4px solid red;
   color: red;
-  font-size: 30px;
+  font-size: xx-large;
 }
-
 
 #messageForm {
   display: flex;
@@ -347,7 +347,6 @@ list-style: none;
   background-color: #3498db;
 }
 
-
 /* 選択中のルームのスタイル */
 .room-selected {
   background-color: #3498db;
@@ -422,7 +421,7 @@ list-style: none;
 }
 
 #changeLog li:before {
-  content: '\2022';
+  content: "\2022";
   color: #3498db;
   font-weight: bold;
   display: inline-block;
@@ -464,7 +463,8 @@ footer {
 }
 
 /* アイコンのスタイル */
-.fab, .fa-solid {
+.fab,
+.fa-solid {
   font-size: 1.5em;
   vertical-align: middle;
 }
@@ -484,11 +484,44 @@ footer {
   height: 100vh; /* 画面の高さいっぱいに設定 */
 }
 
-
 .chat-container {
   width: 70%; /* 初期の幅を設定 */
   display: inline-block;
   vertical-align: top;
   overflow: auto; /* スクロールが必要な場合にスクロールバーを表示 */
   height: 100vh; /* 画面の高さいっぱいに設定 */
+}
+
+/* 画像モーダルのスタイル */
+#modalOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+#modalImageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+
+#modalImage {
+  max-width: 100%;
+  max-height: 100%;
+  border: 1px solid white;
+  cursor: pointer;
+  /* 画像をモザイクで表示 */
+  filter: blur(30px); /* 30pxのモザイクをかける */
+  transition: filter 0.1s ease-in-out; /* フィルターのトランジションを追加 */
+  z-index: 100;
 }

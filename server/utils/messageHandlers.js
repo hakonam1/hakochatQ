@@ -6,16 +6,14 @@ function generateMessageId() {
 }
 
 function generateRandomString(length) {
-  const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
+  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
   for (let i = 0; i < length; i++) {
     const randomIndex = Math.floor(Math.random() * characters.length);
     result += characters.charAt(randomIndex);
   }
   return result;
 }
-
-
 
 //新しいメッセージが受信されたときの処理
 function handleNewMessage(message, socket, io, rooms) {
@@ -27,8 +25,15 @@ function handleNewMessage(message, socket, io, rooms) {
   // URLを正規表現を使用して検出
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const messageWithLinks = text.replace(urlRegex, (url) => {
-    return `<a href="${url}" target="_blank">${url}</a>`;
+    if (isImageURL(url)) {
+      // 画像URLの場合、モーダルを表示するためのリンクを生成
+      return `<a href="#" class="image-link" data-image-url="${url}">${url}</a>`;
+    } else {
+      // 画像以外のURLの場合、通常のハイパーリンクを生成
+      return `<a href="${url}" target="_blank">${url}</a>`;
+    }
   });
+
 
   if (text.length > 200) {
     socket.emit("error", "Message is limited to 200 characters.");
@@ -53,8 +58,6 @@ function handleNewMessage(message, socket, io, rooms) {
     isOwnMessage: false,
   };
 
-
-
   chatMessage.isOwnMessage = room.id === message.roomId;
   room.chatLog.push(chatMessage);
 
@@ -65,26 +68,26 @@ function handleNewMessage(message, socket, io, rooms) {
   io.to(`room-${room.id}`).emit("chatLog", {
     roomId: room.id,
     chatLog: room.chatLog,
-  })
+  });
 
   // 新しいメッセージがあるルームのインデックスを検索
   const roomIndex = rooms.findIndex((r) => r.id === roomId);
-  
+
   if (roomIndex !== -1) {
     // ルームをリストから削除し、先頭に移動させる
     const [room] = rooms.splice(roomIndex, 1);
     rooms.unshift(room);
-    
+
     io.emit("updateRoomList", rooms); // 全クライアントにルームリストの更新を送信
   }
 
   room.totalMessages = room.chatLog.length;
 
-  console.log("Updated chatLog for room", room.id);;
+  console.log("Updated chatLog for room", room.id);
 }
 
 function handleUpvote(socket, messageId, io, rooms) {
-  console.log('handleUpvote called for message ID:', messageId); // デバッグログ
+  console.log("handleUpvote called for message ID:", messageId); // デバッグログ
 
   const room = rooms.find((r) => r.users.includes(socket.id));
   if (room) {
@@ -100,7 +103,7 @@ function handleUpvote(socket, messageId, io, rooms) {
 }
 
 function handleDownvote(socket, messageId, io, rooms) {
-  console.log('handleDownvote called for message ID:', messageId); // デバッグログ
+  console.log("handleDownvote called for message ID:", messageId); // デバッグログ
 
   const room = rooms.find((r) => r.users.includes(socket.id));
   if (room) {
@@ -120,12 +123,14 @@ function updateTotalVotes(roomId, io, rooms) {
   const room = rooms.find((r) => r.id === roomId);
   if (room) {
     const { totalUpvotes, totalDownvotes } = calculateTotalVotes(room.chatLog);
-    io.to(`room-${room.id}`).emit('updateTotalVotes', {
+    io.to(`room-${room.id}`).emit("updateTotalVotes", {
       totalUpvotes,
       totalDownvotes,
     });
     // デバッグ用のログを出力
-    console.log(`Sent total upvotes: ${totalUpvotes}, total downvotes: ${totalDownvotes}`);
+    console.log(
+      `Sent total upvotes: ${totalUpvotes}, total downvotes: ${totalDownvotes}`
+    );
   }
 }
 
@@ -142,6 +147,12 @@ function calculateTotalVotes(chatLog) {
   return { totalUpvotes, totalDownvotes };
 }
 
+// 画像URLかどうかを判定する関数
+function isImageURL(url) {
+  const imageExtensions = [".jpg", ".jpeg", ".png", ".gif"];
+  const lowercasedURL = url.toLowerCase();
+  return imageExtensions.some((extension) => lowercasedURL.endsWith(extension));
+}
 
 module.exports = {
   handleNewMessage,
