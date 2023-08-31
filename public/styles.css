@@ -1,3 +1,5 @@
+/* styles.css */
+
 header {
   height: 20px; /* 適切な高さに変更してください */
   background-color: #121212; /* ヘッダーの背景色を設定 */
@@ -524,4 +526,26 @@ footer {
   filter: blur(30px); /* 30pxのモザイクをかける */
   transition: filter 0.1s ease-in-out; /* フィルターのトランジションを追加 */
   z-index: 100;
+}
+
+.room-content {
+  display: flex; /* 要素を横並びに配置 */
+  justify-content: space-between; /* 要素を両端に配置 */
+  align-items: center; /* 要素を縦方向に中央寄せ */
+}
+
+.room-content a {
+  text-decoration: none;
+  color: white;
+}
+
+.room-metadata {
+  color: gray;
+}
+
+
+
+.time-of-last-message {
+  color: gray;
+  font-size: 12px;
 }

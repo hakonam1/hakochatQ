@@ -213,16 +213,46 @@ function updateRoomList(rooms) {
   roomList.innerHTML = "";
   rooms.forEach((room) => {
     const roomItem = document.createElement("li");
+    const roomContent = document.createElement("div");
+    roomContent.classList.add("room-content"); // liとaの親要素のクラス
+
     const roomLink = document.createElement("a");
-    roomLink.href = `#${room.id}`;
+    roomLink.href = `#room-${room.id}`;
     roomLink.textContent = `${room.title} (${room.chatLog.length})`;
     roomLink.setAttribute("data-room-id", room.id);
     roomLink.addEventListener("click", () => {
       joinRoom(room.id);
     });
-    roomItem.appendChild(roomLink);
+
+    const roomMetadata = document.createElement("div");
+    roomMetadata.classList.add("room-metadata"); // メタデータのコンテナのクラス
+
+    const lastMessageTime = document.createElement("span");
+    lastMessageTime.classList.add("time-of-last-message"); // 最後のメッセージのクラス
+    lastMessageTime.textContent = formatLastMessageTimestamp(room.lastMessageTimestamp);
+
+    roomMetadata.appendChild(lastMessageTime);
+
+    roomContent.appendChild(roomLink);
+    roomContent.appendChild(roomMetadata);
+
+    roomItem.appendChild(roomContent);
+
     roomList.appendChild(roomItem);
   });
+}
+
+function formatLastMessageTimestamp(timestamp) {
+  const now = new Date();
+  const messageTime = new Date(timestamp);
+  const timeDifference = now - messageTime;
+  const minutesDifference = Math.floor(timeDifference / (1000 * 60));
+  if (minutesDifference < 60) {
+    return `${minutesDifference}分前`;
+  } else {
+    const hoursDifference = Math.floor(minutesDifference / 60);
+    return `${hoursDifference}時間前`;
+  }
 }
 
 function joinRoom(roomId) {

@@ -65,6 +65,8 @@ function handleNewMessage(message, socket, io, rooms) {
     room.chatLog.shift();
   }
 
+  room.lastMessageTimestamp = timestamp; // ルームの最後のメッセージのタイムスタンプを更新
+
   io.to(`room-${room.id}`).emit("chatLog", {
     roomId: room.id,
     chatLog: room.chatLog,
