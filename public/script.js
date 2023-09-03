@@ -248,10 +248,10 @@ function formatLastMessageTimestamp(timestamp) {
   const timeDifference = now - messageTime;
   const minutesDifference = Math.floor(timeDifference / (1000 * 60));
   if (minutesDifference < 60) {
-    return `${minutesDifference}分前`;
+    return `${minutesDifference}min ago`;
   } else {
     const hoursDifference = Math.floor(minutesDifference / 60);
-    return `${hoursDifference}時間前`;
+    return `${hoursDifference}h ago`;
   }
 }
 

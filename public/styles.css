@@ -159,7 +159,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.2);
   pointer-events: none; /* クリックイベントを下の要素に透過させる */
   z-index: 2;
 }
@@ -171,7 +171,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("https://i.gyazo.com/a2f2101bc44b224b98ea883de0cfb4ff.gif");
+  background-image: url("https://i.gyazo.com/05bdb89d57569a6081201d17347363aa.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
