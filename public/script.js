@@ -293,7 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
   Push.Permission.request();
 });
 
-const splitter = document.getElementById("splitter");
+const splitter = document.getElementById("splitter1");
 const threadListContainer = document.querySelector(".thread-list-container");
 const chatContainer = document.querySelector(".chat-container");
 

@@ -1,4 +1,5 @@
 // server.js
+require('dotenv').config();
 const express = require("express");
 const app = express();
 const http = require("http").createServer(app);
@@ -60,3 +61,26 @@ http.listen(3000, () => {
 module.exports = {
   userCount
 }
+
+
+// Hyperbeam function
+const axios = require("axios");
+let computer;
+
+// Get a virtual computer object. If no object exists, create it.
+app.get("/computer", async (req, res) => {
+  if (computer) {
+    res.send(computer);
+    return;
+  }
+  const resp = await axios.post(
+    "https://engine.hyperbeam.com/v0/vm",
+    {},
+    {
+      headers: { Authorization: `Bearer ${process.env.HB_API_KEY}` },
+    }
+  );
+  computer = resp.data;
+  res.send(computer);
+});
+app.listen(8080, () => console.log("Server start at http://localhost:8080"));

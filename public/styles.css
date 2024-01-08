@@ -21,11 +21,17 @@ body {
   margin: 0;
   overflow-x: hidden;
 }
+.first-container {
+  height: 60vh;
+}
+.second-container {
+  height: 60vh;
+}
 
-.container {
+.container-a{
   display: flex;
   width: 100%;
-  height: 90vh;
+  height: 100%;
   transition: transform 0.3s ease-in-out;
   margin-bottom: 10px;
 }
@@ -106,7 +112,7 @@ body {
   /* justify-content: space-between; 子要素を均等に配置 */
   position: relative; /* 相対位置指定を設定 テキストフォームを固定するため*/
   flex: 1;
-  width: 50vh;
+  /* width: 50vh; */
   min-width: 380px;
   padding: 15px;
   transition: transform 0.3s ease-in-out;
@@ -118,6 +124,9 @@ body {
 }
 
 @media (max-width: 480px) {
+  .chat-container {
+    padding: 10px;
+  }
   .open .chat-container {
     transform: translateX(0);
   }
@@ -129,6 +138,13 @@ body {
   #chatLogWrapper {
     flex-grow: 1; /* チャットログエリアが残りのスペースを占める */
     z-index: 1;
+  }
+  .first-container {
+    height: 70vh;
+  }
+  .virtualComputerDiv {
+    height: 70vh;
+    width: 100vh;
   }
 }
 
@@ -461,7 +477,8 @@ footer {
   color: #6495ed;
 }
 
-.second-container {
+.third-container {
+  height: auto;
   margin-top: 20px;
   margin-left: 20px;
   padding-left: 20px;
@@ -471,8 +488,8 @@ footer {
 /* 使用方法リンクのスタイル */
 .usage {
   padding-top: 20px;
+  padding-bottom: 20px;
   border: #994d73 2px solid; /*境界線の指定*/
-  padding: 10px; /*内側の余白の指定*/
   display: inline-block;
   border-radius: 0.5em; /*角の丸み*/
 }
@@ -509,14 +526,22 @@ footer {
 }
 
 /* スプリッターのスタイル */
-.splitter {
-  width: 5px;
+#splitter1 {
+  width: 6px;
+  background-color: #217f9f;
   cursor: col-resize; /* ドラッグカーソルを変更 */
 }
+#splitter2 {
+  width: 100%;
+  height:6px;
+  background-color: #217f9f;
+  cursor: ns-resize;
+}
+
 
 /* ルーム一覧とチャットのコンテナのスタイル */
 .thread-list-container {
-  width: 30%; /* 初期の幅を設定 */
+  width: 100px; /* 初期の幅を設定 */
   display: inline-block;
   vertical-align: top;
   overflow: auto; /* スクロールが必要な場合にスクロールバーを表示 */
@@ -583,3 +608,5 @@ footer {
   color: gray;
   font-size: 12px;
 }
+
+

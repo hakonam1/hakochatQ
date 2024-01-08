@@ -17,7 +17,7 @@
     <h4>HakoChat</h4>
   </header>
   <div class="first-container">
-    <div class="container">
+    <div class="container-a">
       <!-- スレッド（ルーム）一覧 -->
       <div class="thread-list-container">
         <button id="createRoomButton">Create Room</button>
@@ -27,7 +27,7 @@
       </div>
 
       <!-- スプリッター -->
-      <div class="splitter" id="splitter"></div>
+      <div class="splitter" id="splitter1"></div>
 
       <div class="chat-container">
         <div id="userCount"></div>
@@ -42,10 +42,64 @@
       </div>
     </div>
   </div>
-
+  <!-- スプリッター -->
+  <div class="splitter" id="splitter2"></div>
   <div class="second-container">
+    
+    <div id="virtualComputerDiv" style="height:420px;width:700"></div>
+    <div style="font-family: sans-serif">
+      <button id="reload">Reload</button>
+      <button id="back">Go Back</button>
+      <button id="forward">Go Forward</button>
+      <button id="gotoYouTubeBtn">Youtube</button>
+      <button id="gotoFc2liveBtn">FC2live</button>
+      <button id="gotoNiconico">NicoNico</button>
+      <button id="gotoAnix">Anime</button>
+      <button id="gotoRandomYoutube">RandomYT</button>
+      Volume: <input type="range" min="0" max="100" value="100" id="range">
+      <p>User ID: <span id="userId"></span></p>
+      <p>Current website: <span id="currentSite"></span></p>
+    </div>
+    <script type="module">
+      import Hyperbeam from "https://unpkg.com/@hyperbeam/web@latest/dist/index.js"
+      const resp = await fetch("/computer")
+      const data = await resp.json()
+      const hb = await Hyperbeam(virtualComputerDiv, data.embed_url)
+      userId.innerText = hb.userId
+      reload.addEventListener("click", () => {
+        hb.tabs.reload()
+      })
+      back.addEventListener("click", () => {
+        hb.tabs.goBack()
+      })
+      forward.addEventListener("click", () => {
+        hb.tabs.goForward()
+      })
+      gotoYouTubeBtn.addEventListener("click", () => {
+        hb.tabs.update({ url: "https://youtube.com" }) // Programmatic navigation
+      })
+      gotoFc2liveBtn.addEventListener("click", () => {
+        hb.tabs.update({ url: "https://live.fc2.com/" }) // Programmatic navigation
+      })
+      gotoNiconico.addEventListener("click", () => {
+        hb.tabs.update({ url: "http://www.nicovideo.jp/" }) // Programmatic navigation
+      })
+      gotoAnix.addEventListener("click", () => {
+        hb.tabs.update({ url: "https://anix.vc/home" }) // Programmatic navigation
+      })
+      gotoRandomYoutube.addEventListener("click", () => {
+        hb.tabs.update({ url: "http://astronaut.io/" }) // Programmatic navigation
+      })
+      hb.tabs.onUpdated.addListener((tabId, changeInfo) => {
+        if (changeInfo.title)
+          currentSite.innerText = changeInfo.title // Listen to tab changes
+      })
+    </script>
+  </div>
+  <div class="third-container">
     <div id="Github">
-      <a href="https://github.com/hakonam1/hakochatQ" target="_blank">SourceCode https://github.com/hakonam1/hakochatQ</a>
+      <a href="https://github.com/hakonam1/hakochatQ" target="_blank">SourceCode
+        https://github.com/hakonam1/hakochatQ</a>
     </div>
     <div class="usage">
       <a href="https://scrapbox.io/hakonamy/HakoChat%E4%BD%BF%E3%81%84%E6%96%B9" target="_blank">How to use</a>
@@ -113,6 +167,7 @@
 
   <script src="https://cdn.socket.io/3.1.3/socket.io.min.js"></script>
   <script src="script.js"></script>
+  <script src="contentResize.js"></script>
 </body>
 
 </html>
