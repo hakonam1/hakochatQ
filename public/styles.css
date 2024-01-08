@@ -28,7 +28,7 @@ body {
   height: 60vh;
 }
 
-.container-a{
+.container-a {
   display: flex;
   width: 100%;
   height: 100%;
@@ -124,7 +124,7 @@ body {
 }
 
 @media (max-width: 480px) {
-  .chat-container {
+  /* .chat-container {
     padding: 10px;
   }
   .open .chat-container {
@@ -133,18 +133,51 @@ body {
 
   .open .thread-list-container {
     transform: translateX(-100%);
-  }
+  } */
 
   #chatLogWrapper {
     flex-grow: 1; /* チャットログエリアが残りのスペースを占める */
     z-index: 1;
   }
-  .first-container {
+  /* .first-container {
     height: 70vh;
   }
   .virtualComputerDiv {
     height: 70vh;
     width: 100vh;
+  } */
+}
+
+@media (max-width: 480px) {
+  .thread-list-container {
+    position: fixed;
+    top: 0;
+    left: -100%; /* 画面の左側に隠れるように設定 */
+    width: 80%;
+    height: 100%;
+    z-index: 1000;
+    transition: left 0.3s; /* 左への移動をアニメーション化 */
+  }
+
+  .open-thread-list {
+    position: absolute;
+    left: 0; /* オープン時は左を0に設定して表示 */
+  }
+
+  /* メニューアイコンのスタイル */
+  #menuIcon {
+    display: block;
+    cursor: pointer;
+    font-size: 30px; /* アイコンのサイズを大きくする */
+    color: #6cbbe2; /* アイコンの色を白にする */
+    padding: 5px; /* タッチしやすいようにパディングを追加 */
+    position: absolute; /* ヘッダー内で自由に配置できるように絶対位置指定 */
+    top: 5px; /* 上からの位置 */
+    left: 5px; /* 左からの位置 */
+    z-index: 1001; /* 他の要素より前面に表示 */
+  }
+  .chat-container {
+    height: 10vh;
   }
 }
 
@@ -533,11 +566,10 @@ footer {
 }
 #splitter2 {
   width: 100%;
-  height:6px;
+  height: 6px;
   background-color: #217f9f;
   cursor: ns-resize;
 }
-
 
 /* ルーム一覧とチャットのコンテナのスタイル */
 .thread-list-container {
@@ -609,4 +641,6 @@ footer {
   font-size: 12px;
 }
 
-
+#root {
+  margin: 10px;
+}

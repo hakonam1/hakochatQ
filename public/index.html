@@ -15,6 +15,7 @@
 <body>
   <header>
     <h4>HakoChat</h4>
+    <div id="menuIcon"><i class="fas fa-star"></i></div> <!-- メニューアイコン -->
   </header>
   <div class="first-container">
     <div class="container-a">
@@ -36,7 +37,7 @@
           <div id="overlay"></div>
         </div>
         <form id="messageForm">
-          <textarea id="messageInput" placeholder="text message" rows="3" required></textarea>
+          <textarea id="messageInput" placeholder="text message" rows="1" required></textarea>
           <button type="submit">Send</button>
         </form>
       </div>
@@ -45,7 +46,6 @@
   <!-- スプリッター -->
   <div class="splitter" id="splitter2"></div>
   <div class="second-container">
-    
     <div id="virtualComputerDiv" style="height:420px;width:700"></div>
     <div style="font-family: sans-serif">
       <button id="reload">Reload</button>
@@ -168,6 +168,7 @@
   <script src="https://cdn.socket.io/3.1.3/socket.io.min.js"></script>
   <script src="script.js"></script>
   <script src="contentResize.js"></script>
+  <script src="threadListPopUp.js"></script>
 </body>
 
 </html>
