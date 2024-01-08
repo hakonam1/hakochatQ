@@ -16,68 +16,73 @@
   <header>
     <h4>HakoChat</h4>
   </header>
-  <div class="container">
-    <!-- スレッド（ルーム）一覧 -->
-    <div class="thread-list-container">
-      <button id="createRoomButton">Create Room</button>
-      <ul id="roomList">
-        <!-- ルーム一覧がここに生成されます -->
-      </ul>
-    </div>
-
-    <!-- スプリッター -->
-    <div class="splitter" id="splitter"></div>
-
-    <div class="chat-container">
-      <div id="userCount"></div>
-      <div id="chatLogWrapper">
-        <div id="chatLog"></div>
-        <div id="overlay"></div>
+  <div class="first-container">
+    <div class="container">
+      <!-- スレッド（ルーム）一覧 -->
+      <div class="thread-list-container">
+        <button id="createRoomButton">Create Room</button>
+        <ul id="roomList">
+          <!-- ルーム一覧がここに生成されます -->
+        </ul>
       </div>
-      <form id="messageForm">
-        <textarea id="messageInput" placeholder="text message" rows="3" required></textarea>
-        <button type="submit">Send</button>
-      </form>
+
+      <!-- スプリッター -->
+      <div class="splitter" id="splitter"></div>
+
+      <div class="chat-container">
+        <div id="userCount"></div>
+        <div id="chatLogWrapper">
+          <div id="chatLog"></div>
+          <div id="overlay"></div>
+        </div>
+        <form id="messageForm">
+          <textarea id="messageInput" placeholder="text message" rows="3" required></textarea>
+          <button type="submit">Send</button>
+        </form>
+      </div>
     </div>
   </div>
-  <div class="usage">
-    <a href="https://scrapbox.io/hakonami/HakoChat%E4%BD%BF%E3%81%84%E6%96%B9" target="_blank">How to use</a>
-  </div>
-  <div id="Github">
-    <a href="https://github.com/hakonam1/hakochatQ" target="_blank">https://github.com/hakonam1/hakochatQ</a>
-  </div>
-  <div id="changeLog">
-    <h4>変更点</h4>
-    <div>
-      <ul>2023.09.02
-        <li>Spotifyの埋め込み表示</li>
-      </ul>
-      <ul>2023.08.27
-        <li>画像のモーダルウィンドウ表示</li>
-      </ul>
-      <ul>2023.08.26
-        <li>URLをハイパーリンクにする</li>
-      </ul>
-      <ul>2023.08.24
-        <li>最新メッセージ順にトークルーム一覧を並び替える</li>
-        <li>Roomtitleの横に総メッセージ数を表示</li>
-        <li>ドラッグで幅を変えられるように(PC)</li>
-      </ul>
-      <ul>2023.08.23
-        <li>レス番号を追加</li>
-        <li>改行できない問題を修正</li>
-        <li>いいねの数で文字の色が変わるように</li>
-      </ul>
-      <ul>2023.08.17
-        <li>メッセージのスタイルを変更</li>
-        <li>ルーム作成のキャンセルボタンを追加</li>
-      </ul>
-      <ul>2023.08.14
-        <li>メッセージのスタイルが崩れる問題を修正</li>
-      </ul>
-      <ul>2023.08.12
-        <li>チャットログがスクロールできないバグを修正。</li>
-      </ul>
+
+  <div class="second-container">
+    <div id="Github">
+      <a href="https://github.com/hakonam1/hakochatQ" target="_blank">SourceCode https://github.com/hakonam1/hakochatQ</a>
+    </div>
+    <div class="usage">
+      <a href="https://scrapbox.io/hakonamy/HakoChat%E4%BD%BF%E3%81%84%E6%96%B9" target="_blank">How to use</a>
+    </div>
+    <div id="changeLog">
+      <h4>変更点</h4>
+      <div>
+        <ul>2023.09.02
+          <li>Spotifyの埋め込み表示</li>
+        </ul>
+        <ul>2023.08.27
+          <li>画像のモーダルウィンドウ表示</li>
+        </ul>
+        <ul>2023.08.26
+          <li>URLをハイパーリンクにする</li>
+        </ul>
+        <ul>2023.08.24
+          <li>最新メッセージ順にトークルーム一覧を並び替える</li>
+          <li>Roomtitleの横に総メッセージ数を表示</li>
+          <li>ドラッグで幅を変えられるように(PC)</li>
+        </ul>
+        <ul>2023.08.23
+          <li>レス番号を追加</li>
+          <li>改行できない問題を修正</li>
+          <li>いいねの数で文字の色が変わるように</li>
+        </ul>
+        <ul>2023.08.17
+          <li>メッセージのスタイルを変更</li>
+          <li>ルーム作成のキャンセルボタンを追加</li>
+        </ul>
+        <ul>2023.08.14
+          <li>メッセージのスタイルが崩れる問題を修正</li>
+        </ul>
+        <ul>2023.08.12
+          <li>チャットログがスクロールできないバグを修正。</li>
+        </ul>
+      </div>
     </div>
   </div>
   <div id="roomDialog" class="room-dialog">
@@ -92,7 +97,7 @@
   <div id="modalOverlay">
     <div id="modalImageContainer">
       <div id="mosaic" class="mosaic"></div>
-      <img id="modalImage" src="" alt="Modal Image">
+      <img id="modalImag" alt="Modal Image">
     </div>
   </div>
   <footer>

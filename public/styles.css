@@ -24,10 +24,10 @@ body {
 
 .container {
   display: flex;
-  overflow-x: scroll;
   width: 100%;
   height: 90vh;
   transition: transform 0.3s ease-in-out;
+  margin-bottom: 10px;
 }
 
 .thread-list-container {
@@ -39,7 +39,7 @@ body {
   transition: transform 0.3s ease-in-out;
 }
 
-.container.open .thread-list-container {
+.open .thread-list-container {
   transform: translateX(0);
 }
 
@@ -103,23 +103,26 @@ body {
 .chat-container {
   display: flex;
   flex-direction: column;
+  /* justify-content: space-between; 子要素を均等に配置 */
+  position: relative; /* 相対位置指定を設定 テキストフォームを固定するため*/
   flex: 1;
-  width: 95vh;
+  width: 50vh;
   min-width: 380px;
-  padding: 10px;
+  padding: 15px;
   transition: transform 0.3s ease-in-out;
+  height: auto;
 }
 
-.container.open .chat-container {
+.open .chat-container {
   transform: translateX(-100%);
 }
 
 @media (max-width: 480px) {
-  .container.open .chat-container {
+  .open .chat-container {
     transform: translateX(0);
   }
 
-  .container.open .thread-list-container {
+  .open .thread-list-container {
     transform: translateX(-100%);
   }
 
@@ -137,19 +140,20 @@ body {
 
 #chatLogWrapper {
   flex: 1;
-  height: 70%;
+  height: 85%;
+  margin-bottom: 10px;
   position: relative;
   z-index: 1;
 }
 
 #chatLog {
   flex: 1;
-  height: 90%;
+  height: 95%;
   overflow-y: scroll;
   /* overflow-x: scroll; */
   background-color: transparent; /* 背景色を透明に */
-  padding: 10px;
-  margin: 10px;
+  padding: 5px;
+  margin: 5px;
   border-radius: 8px;
 }
 
@@ -176,7 +180,7 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
   opacity: 0.7;
-  z-index: -1; /* 背面に配置 */
+  z-index: -10; /* 背面に配置 */
 }
 
 .message {
@@ -266,6 +270,10 @@ body {
 #messageForm {
   display: flex;
   align-items: center;
+  position: absolute; /* form要素に絶対位置指定を設定 */
+  bottom: 0; /* 親要素の底部に配置 */
+  width: 100%; /* 必要に応じて幅を設定 */
+  z-index: 1;
 }
 
 #messageInput {
@@ -399,11 +407,12 @@ body {
 }
 
 #changeLog {
+  border: 2px solid #994d73;
   background-color: #141414; /* 半透明の黒 */
-  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-size: 12px;
+  display: inline-block;
 }
 
 #changeLog h4 {
@@ -414,7 +423,7 @@ body {
 #changeLog li {
   list-style-type: none;
   color: #3498db;
-  margin-left: 0px;
+  margin-left: 15px;
 }
 
 #changeLog ul {
@@ -445,16 +454,44 @@ footer {
 
 /* フッターコンテンツのスタイル */
 .footer-content {
-  font-size: x-small;
+  font-size: 20px;
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
+  color: #6495ed;
+}
+
+.second-container {
+  margin-top: 20px;
+  margin-left: 20px;
+  padding-left: 20px;
+  border: #0095ff;
 }
 
 /* 使用方法リンクのスタイル */
+.usage {
+  padding-top: 20px;
+  border: #994d73 2px solid; /*境界線の指定*/
+  padding: 10px; /*内側の余白の指定*/
+  display: inline-block;
+  border-radius: 0.5em; /*角の丸み*/
+}
+
 .usage a {
   color: #3498db; /* リンクの色 */
+  font-size: 50px;
   text-decoration: none;
+  margin: 0 10px;
+}
+
+#Github {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  color: #3498db; /* リンクの色 */
+  font-size: 20px;
+  text-decoration: none;
+  word-wrap: break-word; /* 長い単語を折り返す */
+  white-space: normal; /* 改行と空白を通常通り扱う */
 }
 
 /* ソーシャルリンクのスタイル */
@@ -483,15 +520,15 @@ footer {
   display: inline-block;
   vertical-align: top;
   overflow: auto; /* スクロールが必要な場合にスクロールバーを表示 */
-  height: 100vh; /* 画面の高さいっぱいに設定 */
+  height: auto; /* 画面の高さいっぱいに設定 */
 }
 
 .chat-container {
   width: 70%; /* 初期の幅を設定 */
   display: inline-block;
   vertical-align: top;
-  overflow: auto; /* スクロールが必要な場合にスクロールバーを表示 */
-  height: 100vh; /* 画面の高さいっぱいに設定 */
+  /* overflow: auto; */
+  height: auto;
 }
 
 /* 画像モーダルのスタイル */
@@ -515,7 +552,6 @@ footer {
   max-width: 90%;
   max-height: 90%;
 }
-
 
 #modalImage {
   max-width: 100%;
@@ -542,8 +578,6 @@ footer {
 .room-metadata {
   color: gray;
 }
-
-
 
 .time-of-last-message {
   color: gray;

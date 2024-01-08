@@ -361,7 +361,7 @@ modalOverlay.addEventListener("click", (e) => {
 // 画像をクリックしたらモザイクを再適用するか外す
 modalImage.addEventListener("click", () => {
   if (modalImage.style.filter === "none") {
-    modalImage.style.filter = "blur(30px)";
+    modalImage.style.filter = "blur(15px)";
   } else {
     modalImage.style.filter = "none";
   }
